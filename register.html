@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>注册</title>
+    <link href="https://cdn.bootcss.com/mui/3.4.0/css/mui.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css">    
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/mui/3.4.0/js/mui.min.js"></script>
+	<style type="text/css">
+	body{
+	width: 100%;
+	height: 736px;
+	font-family:"微软雅黑";     
+    background-image: url("image/indexImage.jpg");
+	background-size: 100%;
+	background-repeat: no-repeat;
+	}
+    #wrapper {display:table;width:414px;margin:0 auto;height:736px;}
+    #cell{display:table-cell; top:200px;}
+	</style>
+</head>
+
+<body>
+
+	<div class="mui-content"style =" background-color:transparent;border:none;" >
+
+	   <form method="post" action="registerhandler.aspx" name="form">
+			<div class="mui-card" style =" border:none;background-color:transparent;padding:0px;margin:0px;"id ="wrapper" >
+					<div class="mui-input-group"style =" border:hidden;background-color:transparent;padding:0px;margin:0 auto;" id="cell">
+						<div class="mui-input-row">
+							<label>用户名</label>
+							<input type="text" class="mui-input-clear" placeholder="请输入用户名" name="account" required="required" />
+						</div>
+						<div class="mui-input-row">
+							<label>密码</label>
+							<input type="password" class="mui-input-clear mui-input" placeholder="请输入密码"name="password" id="p1" required="required" />
+						</div>
+                        <div class="mui-input-row">
+                            <label>确认密码</label>
+                            <input name="password1" type="password" class="mui-input-clear mui-input" placeholder="请输入密码" id="p2" required="required" />
+                        </div>
+                        <p id="msg_pwd" style="margin-left: 150px"></p>
+						<div class="mui-content-padded">
+							 <button type="submit" class="mui-btn mui-btn-block mui-btn-primary" id ="btn_register">确认</button>
+						</div>
+                    </div>
+                </div>
+            
+        </form>
+    </div>
+
+</body>
+</html>
+
+<script type="text/javascript">
+
+/*这里用到了js的jquery的库 */
+
+$(document).ready(function(){
+
+    $('#p1').on('input propertychange', function() {                                
+
+                               //input propertychange即实时监控键盘输入包括粘贴
+
+        var pwd = $.trim($(this).val());                                          
+
+                               //获取this，即ipwd的val()值，trim函数的作用是去除空格
+
+        var rpwd = $.trim($("#p2").val());
+
+        if(rpwd!=""){
+
+        if(pwd==""&&rpwd==""){                 
+
+                //若都为空，则提示密码不能为空，为了用户体验（在界面上用required同时做了处理）
+
+            $("#msg_pwd").html("<font color='red'>密码不能为空</font>");
+
+        }
+
+        else{
+
+            if(pwd == rpwd){                                 //相同则提示密码匹配
+
+            $("#msg_pwd").html("<font color='green'>两次密码匹配通过</font>");
+
+                $("#btn_register").disabled = true; //使按钮可以点击
+
+            }
+			//不相同则提示密码匹配；button的disable属性是关于按钮是否会被禁用
+			else{                                          
+
+            $("#msg_pwd").html("<font color='red'>两次密码不匹配</font>");
+
+                $("#btn_register").disabled = false;//将禁用按钮
+
+        }
+
+        }}
+
+    })
+
+})
+
+ 
+
+//由于是两个输入框，所以进行两个输入框的几乎相同的判断
+
+$(document).ready(function(){
+
+        $('#p2').on('input propertychange', function() {
+
+            var pwd = $.trim($(this).val());
+
+            var rpwd = $.trim($("#p1").val());
+
+            if(pwd==""&&rpwd==""){
+
+                $("#msg_pwd").html("<font color='red'>密码不能为空</font>");
+
+            }
+
+            else{
+
+                if(pwd==rpwd){
+
+                $("#msg_pwd").html("<font color='green'>两次密码匹配通过</font>");
+
+                    $("#btn_register").attr("disabled", true);//按钮没有被禁用
+
+                }
+				else{
+
+                $("#msg_pwd").html("<font color='red'>两次密码不匹配</font>");
+
+                    $("#btn_register").attr("disabled", false);
+
+            }
+
+            }
+
+        })
+
+    })
+
+</script>
+
+
